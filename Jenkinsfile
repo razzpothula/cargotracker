@@ -9,12 +9,13 @@ pipeline
             sh "${mvnhome}/bin/mvn compile"
         }
          stage("Publish to Nexus Repository Manager") {
-             nexusArtifactUploader credentialsId: 'nexus-credentials', 
-                 groupId: 'net.java',
-                 nexusUrl: '18.223.241.114:8081/repository/jenkins-nexus/',
+             nexusArtifactUploader artifacts: [[artifactId: 'cargo-tracker', classifier: '', file: 'target.war', type: 'war']],
+                 credentialsId: 'nexus-credentials',
+                 groupId: 'net.java', 
+                 nexusUrl: '18.223.241.114:8081/repository/jenkins-nexus/', 
                  nexusVersion: 'nexus3',
-                 protocol: 'http', 
+                 protocol: 'http',
                  repository: 'jenkins-nexus',
                  version: '1.0-SNAPSHOT'
-    }
+         }
     }
